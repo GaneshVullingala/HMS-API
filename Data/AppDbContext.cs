@@ -16,5 +16,6 @@ namespace EcommerceApi.Data
         public DbSet<DoctorInfo> tblDoctorInfo { get; set; }
         public DbSet<ConsultationInfo> tblConsultationInfo { get; set; }
         public DbSet<CommunicationInfo> tblCommunicationInfo { get; set; }
+        public DbSet<LoginInfo> tblLoginInfo { get; set; }
     }
 }

@@ -35,15 +35,7 @@ namespace EcommerceApi.Services
                 Pincode = frontDeskDTO.Pincode
             };
             await _frontDeskRepository.AddFrontDesk(FronDeskEntity, GeneralinfoEntity);
-            return new AddFrontDeskDTO
-            {
-
-                FullName = frontDeskDTO.FullName,
-                 Email = frontDeskDTO.Email,
-                Phone = frontDeskDTO.Phone,
-                Qualification = frontDeskDTO.Qualification,
-                Address = frontDeskDTO.Address,
-            };
+            return frontDeskDTO;
         }
     }
 }

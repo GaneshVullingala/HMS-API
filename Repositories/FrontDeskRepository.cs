@@ -19,6 +19,7 @@ namespace EcommerceApi.Repositories
             await _context.SaveChangesAsync();
 
             frontDeskinfo.GenId = generalInfo.Genid;
+            frontDeskinfo.CreatedOn = DateTime.Now;
             await _context.tblFrontDeskInfo.AddAsync(frontDeskinfo);
             await _context.SaveChangesAsync();
             return frontDeskinfo;

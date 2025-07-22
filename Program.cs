@@ -33,6 +33,8 @@ builder.Services.AddScoped<IDoctorRepository, DoctorRepository>();
 builder.Services.AddScoped<IDoctorService, DoctorService>();
 builder.Services.AddScoped<IFrontDeskService, FrontDeskService>();
 builder.Services.AddScoped<IFrontDeskRepository, FrontDeskRepository>();
+builder.Services.AddScoped<ILoginRepository, LoginRepository>();
+builder.Services.AddScoped<ILoginService, LoginService>();
 var app = builder.Build();
 
 //// Configure the HTTP request pipeline.

@@ -34,7 +34,8 @@ namespace EcommerceApi.Services
                 Experience = doctorInfo.Experience,
                 PhotoImgUrl = doctorInfo.PhotoImgUrl,
                 DocImgUrl = doctorInfo.DocImgUrl,
-                Pincode = doctorInfo.Pincode
+                Pincode = doctorInfo.Pincode,
+               
             };
             await _repo.AddDoctorAsync(DoctorInfoEntity, GaneralinfoEntity);
             return DoctorInfoEntity;
