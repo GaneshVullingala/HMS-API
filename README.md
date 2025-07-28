@@ -1,38 +1,36 @@
-# Hospital Management System API
+# 🏥 Hospital Management System API
 
-A role-based web application built with ASP.NET where admins, receptionists, doctors, and patients each have specific access and functionalities.
+A role-based web application built with ASP.NET Core, implementing JWT and role-based authentication. This API provides endpoints for admins, receptionists, doctors, and patients with secure access control, enabling the following functionalities:
 
-## 🏥 Features
+## 🔐 Authentication & Authorization
 
-### 🔹 Admin
-- Add and manage **receptionists**
-- Add and manage **doctors**
+This project uses **JWT (JSON Web Tokens)** and **Role-based Authentication** to ensure secure access to API endpoints.
 
-### 🔹 Receptionist
-- Register new **patients**
-- Assign **doctors** to patients
-- Manage patient appointments
 
-### 🔹 Doctor
-- View assigned patients
-- Add **diagnosis** and **treatment**
-- Upload **medications and prescriptions**
+## 🚻 Roles & Features
 
-### 🔹 Patient
-- View assigned doctor
-- Check **treatment progress**
-- Download or view **medical reports** online
+### Admin
+- **Manage Receptionists:** Add, update, and remove receptionist accounts.
+- **Manage Doctors:** Add, update, and remove doctor profiles.
+- **Full system oversight:** Manage access controls and view system logs.
 
-## 🛠️ Tech Stack
+### Receptionist
+- **Patient Registration:** Register new patients into the system.
+- **Doctor Assignment:** Assign doctors to registered patients.
+- **Appointment Management:** Schedule and manage patient appointments.
 
-- ASP.NET Core
-- Entity Framework Core
-- SQL Server
-- C#
-- HTML, CSS, JavaScript (Frontend)
+### Doctor
+- **Patient Dashboard:** View a list of assigned patients.
+- **Diagnosis and Treatment:** Add patient diagnosis, treatment details, and treatment follow-up.
+- **Document Management:** Upload medications, prescriptions, and other medical documents.
 
-## 🚀 Getting Started
+## Tech Stack
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/your-username/your-repo-name.git
+- **Backend:** ASP.NET Core, Entity Framework Core, SQL Server, C#
+- **Authentication:** JWT Token based authentication with role-based authorization
+- **Frontend:** HTML, CSS, JavaScript
+
+📫 Contact / Support
+For any queries, feel free to reach out:
+
+📧 Email: ganesh.vullingala@gmail.com
