@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace EcommerceApi.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class FixCascadeIssue : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -26,6 +26,7 @@ namespace EcommerceApi.Migrations
                     PreviousHistory = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Pincode = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Fee = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
@@ -54,7 +55,6 @@ namespace EcommerceApi.Migrations
                     VitalsId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     PatientId = table.Column<int>(type: "int", nullable: false),
-                    PatientInfoPatientId = table.Column<int>(type: "int", nullable: false),
                     BP = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Sugar = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Height = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
@@ -66,11 +66,11 @@ namespace EcommerceApi.Migrations
                 {
                     table.PrimaryKey("PK_tblPatientVitalsInfo", x => x.VitalsId);
                     table.ForeignKey(
-                        name: "FK_tblPatientVitalsInfo_tblPatientInfo_PatientInfoPatientId",
-                        column: x => x.PatientInfoPatientId,
+                        name: "FK_tblPatientVitalsInfo_tblPatientInfo_PatientId",
+                        column: x => x.PatientId,
                         principalTable: "tblPatientInfo",
                         principalColumn: "PatientId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -80,7 +80,6 @@ namespace EcommerceApi.Migrations
                     Genid = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Roleid = table.Column<int>(type: "int", nullable: false),
-                    RoleInfoRoledId = table.Column<int>(type: "int", nullable: false),
                     FullName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false)
@@ -89,11 +88,11 @@ namespace EcommerceApi.Migrations
                 {
                     table.PrimaryKey("PK_tblGeneralInfo", x => x.Genid);
                     table.ForeignKey(
-                        name: "FK_tblGeneralInfo_tblRoleInfo_RoleInfoRoledId",
-                        column: x => x.RoleInfoRoledId,
+                        name: "FK_tblGeneralInfo_tblRoleInfo_Roleid",
+                        column: x => x.Roleid,
                         principalTable: "tblRoleInfo",
                         principalColumn: "RoledId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -103,7 +102,6 @@ namespace EcommerceApi.Migrations
                     CommId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     GenId = table.Column<int>(type: "int", nullable: false),
-                    GeneralInfoGenid = table.Column<int>(type: "int", nullable: false),
                     Phone = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
@@ -111,11 +109,11 @@ namespace EcommerceApi.Migrations
                 {
                     table.PrimaryKey("PK_tblCommunicationInfo", x => x.CommId);
                     table.ForeignKey(
-                        name: "FK_tblCommunicationInfo_tblGeneralInfo_GeneralInfoGenid",
-                        column: x => x.GeneralInfoGenid,
+                        name: "FK_tblCommunicationInfo_tblGeneralInfo_GenId",
+                        column: x => x.GenId,
                         principalTable: "tblGeneralInfo",
                         principalColumn: "Genid",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -125,7 +123,6 @@ namespace EcommerceApi.Migrations
                     DoctorId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     GenId = table.Column<int>(type: "int", nullable: false),
-                    GeneralInfoGenid = table.Column<int>(type: "int", nullable: false),
                     FullName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Phone = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -142,11 +139,11 @@ namespace EcommerceApi.Migrations
                 {
                     table.PrimaryKey("PK_tblDoctorInfo", x => x.DoctorId);
                     table.ForeignKey(
-                        name: "FK_tblDoctorInfo_tblGeneralInfo_GeneralInfoGenid",
-                        column: x => x.GeneralInfoGenid,
+                        name: "FK_tblDoctorInfo_tblGeneralInfo_GenId",
+                        column: x => x.GenId,
                         principalTable: "tblGeneralInfo",
                         principalColumn: "Genid",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -156,7 +153,6 @@ namespace EcommerceApi.Migrations
                     FrontDeskId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     GenId = table.Column<int>(type: "int", nullable: false),
-                    GeneralInfoGenid = table.Column<int>(type: "int", nullable: false),
                     FullName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Qualification = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Phone = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -173,11 +169,35 @@ namespace EcommerceApi.Migrations
                 {
                     table.PrimaryKey("PK_tblFrontDeskInfo", x => x.FrontDeskId);
                     table.ForeignKey(
-                        name: "FK_tblFrontDeskInfo_tblGeneralInfo_GeneralInfoGenid",
-                        column: x => x.GeneralInfoGenid,
+                        name: "FK_tblFrontDeskInfo_tblGeneralInfo_GenId",
+                        column: x => x.GenId,
                         principalTable: "tblGeneralInfo",
                         principalColumn: "Genid",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "tblLoginInfo",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Genid = table.Column<int>(type: "int", nullable: false),
+                    Role = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Phone = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Username = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_tblLoginInfo", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_tblLoginInfo_tblGeneralInfo_Genid",
+                        column: x => x.Genid,
+                        principalTable: "tblGeneralInfo",
+                        principalColumn: "Genid",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -187,11 +207,8 @@ namespace EcommerceApi.Migrations
                     ConsultId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     PatientId = table.Column<int>(type: "int", nullable: false),
-                    PatientInfoPatientId = table.Column<int>(type: "int", nullable: false),
                     DoctorId = table.Column<int>(type: "int", nullable: false),
-                    DoctorInfoDoctorId = table.Column<int>(type: "int", nullable: false),
                     FrontDeskId = table.Column<int>(type: "int", nullable: false),
-                    FrontDeskInfoFrontDeskId = table.Column<int>(type: "int", nullable: false),
                     CurrentStatus = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Diognosis = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Problem = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -203,20 +220,20 @@ namespace EcommerceApi.Migrations
                 {
                     table.PrimaryKey("PK_tblConsultationInfo", x => x.ConsultId);
                     table.ForeignKey(
-                        name: "FK_tblConsultationInfo_tblDoctorInfo_DoctorInfoDoctorId",
-                        column: x => x.DoctorInfoDoctorId,
+                        name: "FK_tblConsultationInfo_tblDoctorInfo_DoctorId",
+                        column: x => x.DoctorId,
                         principalTable: "tblDoctorInfo",
                         principalColumn: "DoctorId",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_tblConsultationInfo_tblFrontDeskInfo_FrontDeskInfoFrontDeskId",
-                        column: x => x.FrontDeskInfoFrontDeskId,
+                        name: "FK_tblConsultationInfo_tblFrontDeskInfo_FrontDeskId",
+                        column: x => x.FrontDeskId,
                         principalTable: "tblFrontDeskInfo",
                         principalColumn: "FrontDeskId",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_tblConsultationInfo_tblPatientInfo_PatientInfoPatientId",
-                        column: x => x.PatientInfoPatientId,
+                        name: "FK_tblConsultationInfo_tblPatientInfo_PatientId",
+                        column: x => x.PatientId,
                         principalTable: "tblPatientInfo",
                         principalColumn: "PatientId",
                         onDelete: ReferentialAction.Restrict);
@@ -229,11 +246,8 @@ namespace EcommerceApi.Migrations
                     VisitId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ConsultId = table.Column<int>(type: "int", nullable: false),
-                    ConsultationInfoConsultId = table.Column<int>(type: "int", nullable: false),
                     PatientId = table.Column<int>(type: "int", nullable: false),
-                    PatientInfoPatientId = table.Column<int>(type: "int", nullable: false),
                     DoctorId = table.Column<int>(type: "int", nullable: false),
-                    DoctorInfoDoctorId = table.Column<int>(type: "int", nullable: false),
                     LastVisitDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
@@ -241,23 +255,23 @@ namespace EcommerceApi.Migrations
                 {
                     table.PrimaryKey("PK_tblPatientVisitInfo", x => x.VisitId);
                     table.ForeignKey(
-                        name: "FK_tblPatientVisitInfo_tblConsultationInfo_ConsultationInfoConsultId",
-                        column: x => x.ConsultationInfoConsultId,
+                        name: "FK_tblPatientVisitInfo_tblConsultationInfo_ConsultId",
+                        column: x => x.ConsultId,
                         principalTable: "tblConsultationInfo",
                         principalColumn: "ConsultId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_tblPatientVisitInfo_tblDoctorInfo_DoctorInfoDoctorId",
-                        column: x => x.DoctorInfoDoctorId,
+                        name: "FK_tblPatientVisitInfo_tblDoctorInfo_DoctorId",
+                        column: x => x.DoctorId,
                         principalTable: "tblDoctorInfo",
                         principalColumn: "DoctorId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_tblPatientVisitInfo_tblPatientInfo_PatientInfoPatientId",
-                        column: x => x.PatientInfoPatientId,
+                        name: "FK_tblPatientVisitInfo_tblPatientInfo_PatientId",
+                        column: x => x.PatientId,
                         principalTable: "tblPatientInfo",
                         principalColumn: "PatientId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -267,11 +281,8 @@ namespace EcommerceApi.Migrations
                     PrescriptionId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ConsultId = table.Column<int>(type: "int", nullable: false),
-                    ConsultationInfoConsultId = table.Column<int>(type: "int", nullable: false),
                     PatientId = table.Column<int>(type: "int", nullable: false),
-                    PatientInfoPatientId = table.Column<int>(type: "int", nullable: false),
                     DoctorId = table.Column<int>(type: "int", nullable: false),
-                    DoctorInfoDoctorId = table.Column<int>(type: "int", nullable: false),
                     Medicine1 = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     isMrngMedicine1 = table.Column<int>(type: "int", nullable: false),
                     isANoonMedicine1 = table.Column<int>(type: "int", nullable: false),
@@ -302,94 +313,99 @@ namespace EcommerceApi.Migrations
                 {
                     table.PrimaryKey("PK_tblprescriptionInfo", x => x.PrescriptionId);
                     table.ForeignKey(
-                        name: "FK_tblprescriptionInfo_tblConsultationInfo_ConsultationInfoConsultId",
-                        column: x => x.ConsultationInfoConsultId,
+                        name: "FK_tblprescriptionInfo_tblConsultationInfo_ConsultId",
+                        column: x => x.ConsultId,
                         principalTable: "tblConsultationInfo",
                         principalColumn: "ConsultId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_tblprescriptionInfo_tblDoctorInfo_DoctorInfoDoctorId",
-                        column: x => x.DoctorInfoDoctorId,
+                        name: "FK_tblprescriptionInfo_tblDoctorInfo_DoctorId",
+                        column: x => x.DoctorId,
                         principalTable: "tblDoctorInfo",
                         principalColumn: "DoctorId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_tblprescriptionInfo_tblPatientInfo_PatientInfoPatientId",
-                        column: x => x.PatientInfoPatientId,
+                        name: "FK_tblprescriptionInfo_tblPatientInfo_PatientId",
+                        column: x => x.PatientId,
                         principalTable: "tblPatientInfo",
                         principalColumn: "PatientId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_tblCommunicationInfo_GeneralInfoGenid",
+                name: "IX_tblCommunicationInfo_GenId",
                 table: "tblCommunicationInfo",
-                column: "GeneralInfoGenid");
+                column: "GenId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_tblConsultationInfo_DoctorInfoDoctorId",
+                name: "IX_tblConsultationInfo_DoctorId",
                 table: "tblConsultationInfo",
-                column: "DoctorInfoDoctorId");
+                column: "DoctorId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_tblConsultationInfo_FrontDeskInfoFrontDeskId",
+                name: "IX_tblConsultationInfo_FrontDeskId",
                 table: "tblConsultationInfo",
-                column: "FrontDeskInfoFrontDeskId");
+                column: "FrontDeskId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_tblConsultationInfo_PatientInfoPatientId",
+                name: "IX_tblConsultationInfo_PatientId",
                 table: "tblConsultationInfo",
-                column: "PatientInfoPatientId");
+                column: "PatientId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_tblDoctorInfo_GeneralInfoGenid",
+                name: "IX_tblDoctorInfo_GenId",
                 table: "tblDoctorInfo",
-                column: "GeneralInfoGenid");
+                column: "GenId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_tblFrontDeskInfo_GeneralInfoGenid",
+                name: "IX_tblFrontDeskInfo_GenId",
                 table: "tblFrontDeskInfo",
-                column: "GeneralInfoGenid");
+                column: "GenId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_tblGeneralInfo_RoleInfoRoledId",
+                name: "IX_tblGeneralInfo_Roleid",
                 table: "tblGeneralInfo",
-                column: "RoleInfoRoledId");
+                column: "Roleid");
 
             migrationBuilder.CreateIndex(
-                name: "IX_tblPatientVisitInfo_ConsultationInfoConsultId",
+                name: "IX_tblLoginInfo_Genid",
+                table: "tblLoginInfo",
+                column: "Genid");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_tblPatientVisitInfo_ConsultId",
                 table: "tblPatientVisitInfo",
-                column: "ConsultationInfoConsultId");
+                column: "ConsultId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_tblPatientVisitInfo_DoctorInfoDoctorId",
+                name: "IX_tblPatientVisitInfo_DoctorId",
                 table: "tblPatientVisitInfo",
-                column: "DoctorInfoDoctorId");
+                column: "DoctorId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_tblPatientVisitInfo_PatientInfoPatientId",
+                name: "IX_tblPatientVisitInfo_PatientId",
                 table: "tblPatientVisitInfo",
-                column: "PatientInfoPatientId");
+                column: "PatientId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_tblPatientVitalsInfo_PatientInfoPatientId",
+                name: "IX_tblPatientVitalsInfo_PatientId",
                 table: "tblPatientVitalsInfo",
-                column: "PatientInfoPatientId");
+                column: "PatientId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_tblprescriptionInfo_ConsultationInfoConsultId",
+                name: "IX_tblprescriptionInfo_ConsultId",
                 table: "tblprescriptionInfo",
-                column: "ConsultationInfoConsultId");
+                column: "ConsultId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_tblprescriptionInfo_DoctorInfoDoctorId",
+                name: "IX_tblprescriptionInfo_DoctorId",
                 table: "tblprescriptionInfo",
-                column: "DoctorInfoDoctorId");
+                column: "DoctorId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_tblprescriptionInfo_PatientInfoPatientId",
+                name: "IX_tblprescriptionInfo_PatientId",
                 table: "tblprescriptionInfo",
-                column: "PatientInfoPatientId");
+                column: "PatientId");
         }
 
         /// <inheritdoc />
@@ -397,6 +413,9 @@ namespace EcommerceApi.Migrations
         {
             migrationBuilder.DropTable(
                 name: "tblCommunicationInfo");
+
+            migrationBuilder.DropTable(
+                name: "tblLoginInfo");
 
             migrationBuilder.DropTable(
                 name: "tblPatientVisitInfo");

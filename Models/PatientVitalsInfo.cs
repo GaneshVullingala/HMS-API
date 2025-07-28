@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EcommerceApi.Models
 {
@@ -7,6 +8,7 @@ namespace EcommerceApi.Models
         [Key]
         public int VitalsId { get; set; }
         public int PatientId { get; set; }
+        [ForeignKey("PatientId")]
         public PatientInfo PatientInfo { get; set; }
         public string BP { get; set; }
         public string Sugar { get; set; }

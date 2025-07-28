@@ -17,5 +17,30 @@ namespace EcommerceApi.Data
         public DbSet<ConsultationInfo> tblConsultationInfo { get; set; }
         public DbSet<CommunicationInfo> tblCommunicationInfo { get; set; }
         public DbSet<LoginInfo> tblLoginInfo { get; set; }
+
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<ConsultationInfo>()
+                .HasOne(c => c.patientInfo)
+                .WithMany()
+                .HasForeignKey(c => c.PatientId)
+                .OnDelete(DeleteBehavior.Restrict); // or NoAction
+
+            modelBuilder.Entity<ConsultationInfo>()
+                .HasOne(c => c.DoctorInfo)
+                .WithMany()
+                .HasForeignKey(c => c.DoctorId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<ConsultationInfo>()
+                .HasOne(c => c.FrontDeskInfo)
+                .WithMany()
+                .HasForeignKey(c => c.FrontDeskId)
+                .OnDelete(DeleteBehavior.Restrict);
+        }
+
+
     }
 }
+

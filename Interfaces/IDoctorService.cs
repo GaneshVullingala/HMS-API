@@ -13,5 +13,9 @@ namespace EcommerceApi.Interfaces
         Task<bool> DeleteDoctorAsync(int id);
 
         Task<DoctorInfo> UpdateDoctorAsync(int id,AddDoctorDto doctordto);
+
+        Task<ConsultationInfo> UpdateConsultationInfoAsync(ConsultationDto consultationdto);
+
+        Task<bool?> AddPrescriptionAsync(PrescriptionDto prescriptiondto);
     }
 }

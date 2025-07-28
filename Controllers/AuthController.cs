@@ -1,6 +1,7 @@
 ﻿using EcommerceApi.DTO;
 using EcommerceApi.Interfaces;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EcommerceApi.Controllers

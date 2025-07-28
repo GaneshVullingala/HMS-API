@@ -1,11 +1,13 @@
 ﻿using EcommerceApi.DTO;
 using EcommerceApi.Interfaces;
 using EcommerceApi.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
 namespace EcommerceApi.Controllers
 {
+    [Authorize(Roles = "Admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class RoleController : ControllerBase

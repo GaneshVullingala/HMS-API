@@ -1,26 +1,14 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace EcommerceApi.Models
+﻿namespace EcommerceApi.DTO
 {
-    public class PrescriptionInfo
+    public class PrescriptionDto
     {
-        [Key]
-        public int PrescriptionId { get; set; }
         public int ConsultId { get; set; }
-        [ForeignKey("ConsultId")]
-        public ConsultationInfo ConsultationInfo { get; set; }
         public int PatientId { get; set; }
-        [ForeignKey("PatientId")]
-        public PatientInfo PatientInfo { get; set; }
         public int DoctorId { get; set; }
-        [ForeignKey("DoctorId")]
-        public DoctorInfo DoctorInfo { get; set; }
         public string Medicine1 { get; set; }
         public int isMrngMedicine1 { get; set; }
         public int isANoonMedicine1 { get; set; }
         public int isNightMedicine1 { get; set; }
-
         public int Medicine1Quantity { get; set; }
         public string Medicine2 { get; set; }
         public int isMrngMedicine2 { get; set; }

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EcommerceApi.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250715125451_FixDoctorForeignKey")]
-    partial class FixDoctorForeignKey
+    [Migration("20250725103922_FixCascadeIssue")]
+    partial class FixCascadeIssue
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -40,16 +40,13 @@ namespace EcommerceApi.Migrations
                     b.Property<int>("GenId")
                         .HasColumnType("int");
 
-                    b.Property<int>("GeneralInfoGenid")
-                        .HasColumnType("int");
-
                     b.Property<string>("Phone")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("CommId");
 
-                    b.HasIndex("GeneralInfoGenid");
+                    b.HasIndex("GenId");
 
                     b.ToTable("tblCommunicationInfo");
                 });
@@ -80,19 +77,10 @@ namespace EcommerceApi.Migrations
                     b.Property<int>("DoctorId")
                         .HasColumnType("int");
 
-                    b.Property<int>("DoctorInfoDoctorId")
-                        .HasColumnType("int");
-
                     b.Property<int>("FrontDeskId")
                         .HasColumnType("int");
 
-                    b.Property<int>("FrontDeskInfoFrontDeskId")
-                        .HasColumnType("int");
-
                     b.Property<int>("PatientId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PatientInfoPatientId")
                         .HasColumnType("int");
 
                     b.Property<string>("Problem")
@@ -104,11 +92,11 @@ namespace EcommerceApi.Migrations
 
                     b.HasKey("ConsultId");
 
-                    b.HasIndex("DoctorInfoDoctorId");
+                    b.HasIndex("DoctorId");
 
-                    b.HasIndex("FrontDeskInfoFrontDeskId");
+                    b.HasIndex("FrontDeskId");
 
-                    b.HasIndex("PatientInfoPatientId");
+                    b.HasIndex("PatientId");
 
                     b.ToTable("tblConsultationInfo");
                 });
@@ -206,9 +194,6 @@ namespace EcommerceApi.Migrations
                     b.Property<int>("GenId")
                         .HasColumnType("int");
 
-                    b.Property<int>("GeneralInfoGenid")
-                        .HasColumnType("int");
-
                     b.Property<string>("Phone")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -231,7 +216,7 @@ namespace EcommerceApi.Migrations
 
                     b.HasKey("FrontDeskId");
 
-                    b.HasIndex("GeneralInfoGenid");
+                    b.HasIndex("GenId");
 
                     b.ToTable("tblFrontDeskInfo");
                 });
@@ -265,6 +250,44 @@ namespace EcommerceApi.Migrations
                     b.ToTable("tblGeneralInfo");
                 });
 
+            modelBuilder.Entity("EcommerceApi.Models.LoginInfo", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Genid")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Phone")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Genid");
+
+                    b.ToTable("tblLoginInfo");
+                });
+
             modelBuilder.Entity("EcommerceApi.Models.PatientInfo", b =>
                 {
                     b.Property<int>("PatientId")
@@ -283,6 +306,9 @@ namespace EcommerceApi.Migrations
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Fee")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("FrontdeskId")
                         .HasColumnType("int");
@@ -326,16 +352,10 @@ namespace EcommerceApi.Migrations
                     b.Property<int>("ConsultId")
                         .HasColumnType("int");
 
-                    b.Property<int>("ConsultationInfoConsultId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("DoctorId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("DoctorInfoDoctorId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("LastVisitDate")
@@ -344,16 +364,13 @@ namespace EcommerceApi.Migrations
                     b.Property<int>("PatientId")
                         .HasColumnType("int");
 
-                    b.Property<int>("PatientInfoPatientId")
-                        .HasColumnType("int");
-
                     b.HasKey("VisitId");
 
-                    b.HasIndex("ConsultationInfoConsultId");
+                    b.HasIndex("ConsultId");
 
-                    b.HasIndex("DoctorInfoDoctorId");
+                    b.HasIndex("DoctorId");
 
-                    b.HasIndex("PatientInfoPatientId");
+                    b.HasIndex("PatientId");
 
                     b.ToTable("tblPatientVisitInfo");
                 });
@@ -379,9 +396,6 @@ namespace EcommerceApi.Migrations
                     b.Property<int>("PatientId")
                         .HasColumnType("int");
 
-                    b.Property<int>("PatientInfoPatientId")
-                        .HasColumnType("int");
-
                     b.Property<decimal>("SPO2")
                         .HasColumnType("decimal(18,2)");
 
@@ -394,7 +408,7 @@ namespace EcommerceApi.Migrations
 
                     b.HasKey("VitalsId");
 
-                    b.HasIndex("PatientInfoPatientId");
+                    b.HasIndex("PatientId");
 
                     b.ToTable("tblPatientVitalsInfo");
                 });
@@ -410,13 +424,7 @@ namespace EcommerceApi.Migrations
                     b.Property<int>("ConsultId")
                         .HasColumnType("int");
 
-                    b.Property<int>("ConsultationInfoConsultId")
-                        .HasColumnType("int");
-
                     b.Property<int>("DoctorId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("DoctorInfoDoctorId")
                         .HasColumnType("int");
 
                     b.Property<string>("Medicine1")
@@ -455,9 +463,6 @@ namespace EcommerceApi.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("PatientId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PatientInfoPatientId")
                         .HasColumnType("int");
 
                     b.Property<int>("isANoonMedicine1")
@@ -507,11 +512,11 @@ namespace EcommerceApi.Migrations
 
                     b.HasKey("PrescriptionId");
 
-                    b.HasIndex("ConsultationInfoConsultId");
+                    b.HasIndex("ConsultId");
 
-                    b.HasIndex("DoctorInfoDoctorId");
+                    b.HasIndex("DoctorId");
 
-                    b.HasIndex("PatientInfoPatientId");
+                    b.HasIndex("PatientId");
 
                     b.ToTable("tblprescriptionInfo");
                 });
@@ -541,7 +546,7 @@ namespace EcommerceApi.Migrations
                 {
                     b.HasOne("EcommerceApi.Models.GeneralInfo", "GeneralInfo")
                         .WithMany()
-                        .HasForeignKey("GeneralInfoGenid")
+                        .HasForeignKey("GenId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -552,27 +557,27 @@ namespace EcommerceApi.Migrations
                 {
                     b.HasOne("EcommerceApi.Models.DoctorInfo", "DoctorInfo")
                         .WithMany()
-                        .HasForeignKey("DoctorInfoDoctorId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasForeignKey("DoctorId")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("EcommerceApi.Models.FrontDeskInfo", "FrontDeskInfo")
                         .WithMany()
-                        .HasForeignKey("FrontDeskInfoFrontDeskId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasForeignKey("FrontDeskId")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("EcommerceApi.Models.PatientInfo", "PatientInfo")
+                    b.HasOne("EcommerceApi.Models.PatientInfo", "patientInfo")
                         .WithMany()
-                        .HasForeignKey("PatientInfoPatientId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasForeignKey("PatientId")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("DoctorInfo");
 
                     b.Navigation("FrontDeskInfo");
 
-                    b.Navigation("PatientInfo");
+                    b.Navigation("patientInfo");
                 });
 
             modelBuilder.Entity("EcommerceApi.Models.DoctorInfo", b =>
@@ -590,7 +595,7 @@ namespace EcommerceApi.Migrations
                 {
                     b.HasOne("EcommerceApi.Models.GeneralInfo", "GeneralInfo")
                         .WithMany()
-                        .HasForeignKey("GeneralInfoGenid")
+                        .HasForeignKey("GenId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -608,23 +613,34 @@ namespace EcommerceApi.Migrations
                     b.Navigation("RoleInfo");
                 });
 
+            modelBuilder.Entity("EcommerceApi.Models.LoginInfo", b =>
+                {
+                    b.HasOne("EcommerceApi.Models.GeneralInfo", "GeneralInfo")
+                        .WithMany()
+                        .HasForeignKey("Genid")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("GeneralInfo");
+                });
+
             modelBuilder.Entity("EcommerceApi.Models.PatientVisitInfo", b =>
                 {
                     b.HasOne("EcommerceApi.Models.ConsultationInfo", "ConsultationInfo")
                         .WithMany()
-                        .HasForeignKey("ConsultationInfoConsultId")
+                        .HasForeignKey("ConsultId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("EcommerceApi.Models.DoctorInfo", "DoctorInfo")
                         .WithMany()
-                        .HasForeignKey("DoctorInfoDoctorId")
+                        .HasForeignKey("DoctorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("EcommerceApi.Models.PatientInfo", "PatientInfo")
                         .WithMany()
-                        .HasForeignKey("PatientInfoPatientId")
+                        .HasForeignKey("PatientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -639,7 +655,7 @@ namespace EcommerceApi.Migrations
                 {
                     b.HasOne("EcommerceApi.Models.PatientInfo", "PatientInfo")
                         .WithMany()
-                        .HasForeignKey("PatientInfoPatientId")
+                        .HasForeignKey("PatientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -650,19 +666,19 @@ namespace EcommerceApi.Migrations
                 {
                     b.HasOne("EcommerceApi.Models.ConsultationInfo", "ConsultationInfo")
                         .WithMany()
-                        .HasForeignKey("ConsultationInfoConsultId")
+                        .HasForeignKey("ConsultId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("EcommerceApi.Models.DoctorInfo", "DoctorInfo")
                         .WithMany()
-                        .HasForeignKey("DoctorInfoDoctorId")
+                        .HasForeignKey("DoctorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("EcommerceApi.Models.PatientInfo", "PatientInfo")
                         .WithMany()
-                        .HasForeignKey("PatientInfoPatientId")
+                        .HasForeignKey("PatientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

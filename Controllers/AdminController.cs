@@ -1,12 +1,17 @@
-﻿using EcommerceApi.DTO;
+﻿using EcommerceApi.Data;
+using EcommerceApi.DTO;
 using EcommerceApi.Interfaces;
 using EcommerceApi.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Data;
 using System.Threading.Tasks;
 
 namespace EcommerceApi.Controllers
 {
+    [Authorize(Roles = "Admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class AdminController : ControllerBase
@@ -98,5 +103,6 @@ namespace EcommerceApi.Controllers
             var frontdeskentity = await _frontdeskservice.AddFrontDeskAsync(addFrontDeskDTO);
             return Ok(frontdeskentity);
         }
+
     }
 }

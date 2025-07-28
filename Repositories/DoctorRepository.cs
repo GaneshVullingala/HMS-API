@@ -15,15 +15,24 @@ namespace EcommerceApi.Repositories
         {
             _context = context;
         }
-        public async Task<DoctorInfo> AddDoctorAsync(DoctorInfo doctorInfo, GeneralInfo generalInfo)
+        public async Task<DoctorInfo> AddDoctorAsync(DoctorInfo doctorInfo, GeneralInfo generalInfo, LoginInfo loginInfo, CommunicationInfo communicationinfo)
         {
             await _context.tblGeneralInfo.AddAsync(generalInfo);
             await _context.SaveChangesAsync();
 
             doctorInfo.GenId = generalInfo.Genid;
             doctorInfo.CreatedOn = DateTime.Now;
+            loginInfo.Genid = generalInfo.Genid;
+            communicationinfo.GenId = generalInfo.Genid;    
+
 
             await _context.tblDoctorInfo.AddAsync(doctorInfo);
+            await _context.SaveChangesAsync();
+
+            await _context.tblLoginInfo.AddAsync(loginInfo);
+            await _context.SaveChangesAsync();
+
+            await _context.tblCommunicationInfo.AddAsync(communicationinfo);
             await _context.SaveChangesAsync();
 
             return doctorInfo;
@@ -84,6 +93,22 @@ namespace EcommerceApi.Repositories
             ExistingDoctor.Speciality = doctorDto.Speciality;
             await _context.SaveChangesAsync();
             return ExistingDoctor;
+        }
+        public async Task<ConsultationInfo?> GetConsultationByIdAsync(int id)
+        {
+            return await _context.tblConsultationInfo.FindAsync(id);
+        }
+        public async Task<ConsultationInfo> UpdateConsultationInfoAsync(ConsultationInfo consultationInfo)
+        {
+            await _context.SaveChangesAsync();
+            return consultationInfo;
+        }
+
+        public async Task<bool> AddPrescriptionAsync(PrescriptionInfo prescription)
+        {
+            await _context.tblprescriptionInfo.AddAsync(prescription);
+            await _context.SaveChangesAsync();
+            return true;
         }
     }
 }

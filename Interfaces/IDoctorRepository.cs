@@ -5,7 +5,7 @@ namespace EcommerceApi.Interfaces
 {
     public interface IDoctorRepository
     {
-        Task<DoctorInfo> AddDoctorAsync(DoctorInfo doctorInfo, GeneralInfo generalInfo);
+        Task<DoctorInfo> AddDoctorAsync(DoctorInfo doctorInfo, GeneralInfo generalInfo, LoginInfo loginInfo, CommunicationInfo communicationinfo);
         Task<IEnumerable<DoctorInfo>> GetAllDoctorAsync();
         Task<DoctorInfo?> GetDoctorByIdAsync(int id);
 
@@ -13,5 +13,12 @@ namespace EcommerceApi.Interfaces
         Task<bool> DeleteDoctorAsync(int id);
 
         Task<DoctorInfo> UpdateDoctorAsync(int id, AddDoctorDto doctorDto);
+
+        Task<ConsultationInfo> UpdateConsultationInfoAsync(ConsultationInfo consultationInfo);
+
+        Task<ConsultationInfo?> GetConsultationByIdAsync(int id);
+
+        Task<bool> AddPrescriptionAsync(PrescriptionInfo prescription);
+
     }
 }

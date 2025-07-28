@@ -3,6 +3,7 @@ using EcommerceApi.DTO;
 using Microsoft.EntityFrameworkCore;
 using EcommerceApi.Interfaces;
 using EcommerceApi.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace EcommerceApi.Repositories
 {
@@ -16,7 +17,16 @@ namespace EcommerceApi.Repositories
 
         public async Task<LoginInfo> GetLoginAsync(string username, string password)
         {
-            return await _context.tblLoginInfo.FirstOrDefaultAsync(u => (u.Username == username || u.Email == username || u.Phone == username) && u.Password == password);
+            var user = await _context.tblLoginInfo.FirstOrDefaultAsync(u => u.Username == username || u.Email == username || u.Phone == username);
+            if (user == null)
+                return null;
+
+            var hasher = new PasswordHasher<LoginInfo>();
+            var result = hasher.VerifyHashedPassword(user, user.Password, password);
+            if (result == PasswordVerificationResult.Success)
+                return user;
+
+            return null;
         }
     }
 }
