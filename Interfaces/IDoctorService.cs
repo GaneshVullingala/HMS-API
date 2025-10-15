@@ -17,5 +17,8 @@ namespace EcommerceApi.Interfaces
         Task<ConsultationInfo> UpdateConsultationInfoAsync(ConsultationDto consultationdto);
 
         Task<bool?> AddPrescriptionAsync(PrescriptionDto prescriptiondto);
+        //Task<ConsultationInfo> AddConsultationAsync(ConsultationDto consultationDto);
+
+        //Task<IEnumerable<ConsultationInfo>> GetAllConsultationsAsync();
     }
 }

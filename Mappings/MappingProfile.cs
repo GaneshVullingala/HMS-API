@@ -16,7 +16,8 @@ namespace EcommerceApi.Mappings
             CreateMap<PrescriptionDto, PrescriptionInfo>();
             CreateMap<PatientVitalsInfo, PatientVitalsDto>();
             CreateMap<PatientVitalsDto, PatientVitalsInfo>();
-                
+            CreateMap<ConsultationInfo, ConsultationDto>();
+            CreateMap<ConsultationDto, ConsultationInfo>();
         }
     }   
   

@@ -25,5 +25,14 @@ namespace EcommerceApi.Controllers
 
             return Ok(new { Token = token });
         }
+
+        //[HttpPost("login")]
+        //public async Task<IActionResult> Login([FromBody] LoginDTO login)
+        //{
+        //    var loginResponce = await _loginService.GetLoginResponceAsync(login.Username, login.Password);
+        //    if (loginResponce == null)
+        //        return Unauthorized("Invalid credentials");
+        //    return Ok(loginResponce);
+        //}
     }
 }

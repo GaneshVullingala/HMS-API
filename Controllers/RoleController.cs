@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace EcommerceApi.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    //[Authorize(Roles = "Admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class RoleController : ControllerBase

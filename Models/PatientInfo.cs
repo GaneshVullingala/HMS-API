@@ -19,7 +19,7 @@ namespace EcommerceApi.Models
 
         public string Address { get; set; }
         public string Pincode { get; set; }
-        public decimal Fee { get; set; }
+        //public decimal Fee { get; set; }
         public DateTime CreatedOn { get; set; }
     }
 }

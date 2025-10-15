@@ -24,5 +24,7 @@ namespace EcommerceApi.Models
 
         public DateTime RevisitDate { get; set; }
         public DateTime CreatedOn { get; set; }
+
+        public decimal Fee { get; set; }
     }
 }

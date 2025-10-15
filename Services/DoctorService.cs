@@ -6,6 +6,7 @@ using System.Net;
 using System.Numerics;
 using Microsoft.AspNetCore.Identity;
 using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 
 namespace EcommerceApi.Services
 {
@@ -46,16 +47,45 @@ namespace EcommerceApi.Services
                 Address = doctorInfo.Address,
                 Speciality = doctorInfo.Speciality,
                 Experience = doctorInfo.Experience,
-                PhotoImgUrl = doctorInfo.PhotoImgUrl,
-                DocImgUrl = doctorInfo.DocImgUrl,
-                Pincode = doctorInfo.Pincode,
+                //PhotoImgUrl = doctorInfo.PhotoImgUrl,
+                //DocImgUrl = doctorInfo.DocImgUrl,
+                Pincode = doctorInfo.Pincode
+            };
 
-            };
-            var ContactInfoEntity = new CommunicationInfo()
-            {
-                Phone = doctorInfo.Phone,
-                Email = doctorInfo.Email,
-            };
+                if (doctorInfo.PhotoImg != null)
+                {
+                    var photoFileName = Guid.NewGuid() + Path.GetExtension(doctorInfo.PhotoImg.FileName);
+                    var photoPath = Path.Combine("Uploads/Photos", photoFileName);
+                    using (var stream = new FileStream(photoPath, FileMode.Create))
+                    {
+                        await doctorInfo.PhotoImg.CopyToAsync(stream);
+                    }
+                    DoctorInfoEntity.PhotoImgUrl = "/Uploads/Photos/" + photoFileName;
+                }
+                else
+                {
+                    DoctorInfoEntity.PhotoImgUrl = "NoPhoto";
+                }
+
+                if (doctorInfo.DocImg != null)
+                {
+                    var docFileName = Guid.NewGuid() + Path.GetExtension(doctorInfo.DocImg.FileName);
+                    var docPath = Path.Combine("Uploads/Photos", docFileName);
+                    using (var stream = new FileStream(docPath, FileMode.Create))
+                    {
+                        await doctorInfo.DocImg.CopyToAsync(stream);
+                    }
+                    DoctorInfoEntity.DocImgUrl = "/Uploads/Photos/" + docFileName;
+                }
+                else
+                {
+                    DoctorInfoEntity.DocImgUrl = "NoDoc";
+                }
+                var ContactInfoEntity = new CommunicationInfo()
+                {
+                    Phone = doctorInfo.Phone,
+                    Email = doctorInfo.Email,
+                };
             await _repo.AddDoctorAsync(DoctorInfoEntity, GaneralinfoEntity, LoginInfoEntity, ContactInfoEntity);
             return DoctorInfoEntity;
 
@@ -78,7 +108,7 @@ namespace EcommerceApi.Services
             return await _repo.DeleteDoctorAsync(id);
         }
 
-        public async Task<DoctorInfo> UpdateDoctorAsync(int id, AddDoctorDto doctordto)
+        public async Task<DoctorInfo> UpdateDoctorAsync(int id, [FromForm] AddDoctorDto doctordto)
         {
             return await _repo.UpdateDoctorAsync(id, doctordto);
         }
@@ -110,5 +140,11 @@ namespace EcommerceApi.Services
             await _repo.AddPrescriptionAsync(prescriptionEntity);
             return true;
         }
+
+        //public async Task<IEnumerable<ConsultationInfo>> GetAllConsultationsAsync()
+        //{
+        //     return await _repo.GetAllConsultationsAsync();
+        
+        //}
     }
 }

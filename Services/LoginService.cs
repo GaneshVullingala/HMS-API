@@ -1,4 +1,5 @@
-﻿using EcommerceApi.Interfaces;
+﻿using EcommerceApi.DTO;
+using EcommerceApi.Interfaces;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -17,6 +18,8 @@ namespace EcommerceApi.Services
             _config = config;
         }
 
+        //jwt
+
         public async Task<string> AuthenticateAsync(string username, string password)
         {
             var user = await _loginRepository.GetLoginAsync(username, password);
@@ -24,11 +27,11 @@ namespace EcommerceApi.Services
 
             var claims = new[]
             {
-            new Claim(ClaimTypes.Name, user.Username),
-            new Claim(ClaimTypes.Role, user.Role
-            ),
-            new Claim("Genid", user.Genid.ToString())
-        };
+                new Claim(ClaimTypes.Name, user.Username),
+                new Claim(ClaimTypes.Role, user.Role),
+                new Claim("UserId", user.UserId.ToString()),
+                new Claim("Genid", user.Genid.ToString())
+            };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["JwtSettings:Key"]));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
@@ -42,6 +45,12 @@ namespace EcommerceApi.Services
             );
 
             return new JwtSecurityTokenHandler().WriteToken(token);
+            
+        }
+
+        public async Task<LoginResponce> GetLoginResponceAsync(string username, string password)
+        {
+           return await _loginRepository.GetLoginResponceAsync(username, password);
         }
     }
 

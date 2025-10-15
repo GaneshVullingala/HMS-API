@@ -1,0 +1,118 @@
+<h2 style='text-align:center; color: #272361;'>ALPHA CAPITAL</h2><h4 style='text-align:center;'> Customer Ledger - Ledger Report</h4><div style='text-align: center;'><p>1-Oct-2025 to 7-Oct-2025</p></div><table border='1' style='width:50%; display: flex; justify-content: center; align-items: center;'><thead>
+<tr style='background-color: #272361; color: white;'>
+<th>Date</th>
+<th>Particulars</th>
+<th>Vch Type</th>
+<th>Vch No.</th>
+<th>Debit (TSh)</th>
+<th>Credit (TSh)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td><strong>Opening Balance</strong></td>
+<td></td><td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class='text-bold'>
+<td>07-10-2025</td>
+<td>
+Dr</span>
+&nbsp;TANZANIA CENTRAL BANK
+<br/>
+<span class='fst-italic'>
+<p class='fw-bold mb-0'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Narrative: Client Fund Transfer</p></span>
+<p class='mb-0'> Customer Name & Id: Appanna Babu - 1)</p>
+</span>
+</td>
+<td>Customer Deposit</td>
+<td>'2025100124500001</td>
+<td class='text-right'>
+  
+</td>
+<td class='text-right'>
+ 5,000.00 
+</td>
+</tr>
+<tr class='text-bold'>
+<td>07-10-2025</td>
+<td class='text-bold'>
+<span>Dr</span>
+&nbsp;By Bulk Payment
+<span class='fst-italic'>
+<p class='fw-bold mb-0'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Narrative: ok</p>
+</span><span><p class='mb-0'> Customer Name & Id: Appanna Babu - 1</p></span><div class='fst-italic ms-4 fw-normal'>
+TANZANIA CENTRAL BANK&nbsp;&nbsp; 1000.00&nbsp;&nbsp;Dr 
+</br>
+</div><div class='fst-italic ms-4 fw-normal'>
+Standard National Bank&nbsp;&nbsp; 1000.00&nbsp;&nbsp;Dr 
+</br>
+</div></td>
+<td>Customer Deposit</td>
+<td>'2025107881400003</td>
+<td class='text-right'>
+  
+</td>
+<td class='text-right'>
+ 2,000.00 
+</td>
+</tr>
+<tr class='text-bold'>
+<td>07-10-2025</td>
+<td class='text-bold'>
+<span>Cr</span>
+&nbsp;By Bulk Payment
+<span class='fst-italic'>
+<p class='fw-bold mb-0'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Narrative: Trading_Acc</p>
+</span><span><p class='mb-0'> Customer Name & Id: Appanna Babu - 1</p></span><div class='fst-italic ms-4 fw-normal'>
+Trading and Settlement&nbsp;&nbsp; 2500.00&nbsp;&nbsp;Cr 
+</br>
+</div><div class='fst-italic ms-4 fw-normal'>
+International Brokers Commission&nbsp;&nbsp; 11.00&nbsp;&nbsp;Cr 
+</br>
+</div></td>
+<td>Customer Deposit tr</td>
+<td>'2025106088000002</td>
+<td class='text-right'>
+ 2,511.00 
+</td>
+<td class='text-right'>
+  
+</td>
+</tr>
+<tr class='text-bold'>
+<td>07-10-2025</td>
+<td class='text-bold'>
+<span>Dr</span>
+&nbsp;By Bulk Payment
+<span class='fst-italic'>
+<p class='fw-bold mb-0'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Narrative: Trading_Acc</p>
+</span><span><p class='mb-0'> Customer Name & Id: Appanna Babu - 1</p></span><div class='fst-italic ms-4 fw-normal'>
+Trading and Settlement&nbsp;&nbsp; 1800.00&nbsp;&nbsp;Dr 
+</br>
+</div><div class='fst-italic ms-4 fw-normal'>
+International Brokers Commission&nbsp;&nbsp; 8.00&nbsp;&nbsp;Cr 
+</br>
+</div></td>
+<td>Customer Deposit tr</td>
+<td>'2025104663900006</td>
+<td class='text-right'>
+  
+</td>
+<td class='text-right'>
+ 1,792.00 
+</td>
+</tr>
+<tr style='font-weight:bold;background-color:#f1f1f1;'>
+<td colspan='4' style='text-align:right;'>Grand Total</td>
+<td>&nbsp;2,511.00</td>
+<td>&nbsp;8,792.00</td>
+</tr>
+<tr style='font-weight:bold;background-color:#e2e2e2;'>
+<td colspan='2'>Closing Balance</td><td></td><td></td>
+<td>0.00</td><td>6,281.00 Cr</td>
+</tr>
+</tbody>
+</table>

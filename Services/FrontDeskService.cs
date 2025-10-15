@@ -50,6 +50,29 @@ namespace EcommerceApi.Services
                 DocImgUrl = frontDeskDTO.DocImgUrl,
                 Pincode = frontDeskDTO.Pincode
             };
+            if(frontDeskDTO.DocImg != null)
+            {
+                var docFileName = Guid.NewGuid() + Path.GetExtension(frontDeskDTO.DocImg.FileName);
+                var docPath = Path.Combine("Uploads/Photos", docFileName);
+                using (var stream = new FileStream(docPath, FileMode.Create))
+                {
+                    await frontDeskDTO.DocImg.CopyToAsync(stream);
+                }
+                FronDeskEntity.DocImgUrl = docPath;
+            }
+
+            if (frontDeskDTO.PhotoImg != null)
+            {
+                var photoFileName = Guid.NewGuid() + Path.GetExtension(frontDeskDTO.PhotoImg.FileName);
+                var photoPath = Path.Combine("Uploads/Photos", photoFileName);
+                using (var stream = new FileStream(photoPath, FileMode.Create))
+                {
+                    await frontDeskDTO.PhotoImg.CopyToAsync(stream);
+                }
+                FronDeskEntity.PhotoImgUrl = photoPath;
+            }
+
+
             var CommunicationInfoEntity = new CommunicationInfo()
             {
                 Phone = frontDeskDTO.Phone,
@@ -119,6 +142,23 @@ namespace EcommerceApi.Services
             var patientVitalsEntity = _mapper.Map<PatientVitalsInfo>(patientVitalsdto);
             await _frontDeskRepository.AddPatientVitals(patientVitalsEntity);
             return true;
+        }
+
+        public async Task<IEnumerable<FrontDeskInfo>> GetAllFrontDeskInfoAsync()
+        {
+            return await _frontDeskRepository.GetAllFrontDeskAsync();
+        }
+
+        public async Task<PatientVitalsInfo> GetPatientVitalsById(int Id)
+        {
+            return await _frontDeskRepository.GetPatientVitalsById(Id);
+        }
+
+        public async Task<ConsultationDto> AddConsultationAsync(ConsultationDto consultationDto)
+        {
+            var consultationetity = _mapper.Map<ConsultationInfo>(consultationDto);
+            await _frontDeskRepository.AddConsultation(consultationetity);
+            return consultationDto;
         }
     }
 }

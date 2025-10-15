@@ -6,7 +6,8 @@ using EcommerceApi.DTO;
 
 namespace EcommerceApi.Controllers
 {
-    [Authorize(Roles = "FrontDesk")]
+
+    [Authorize(Roles = "FrontDesk, Admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class FrontDeskController : ControllerBase
@@ -17,6 +18,7 @@ namespace EcommerceApi.Controllers
         {
             _frontDeskService = frontDeskService;
         }
+
         [HttpPost("AddPatient")]
         public async Task<IActionResult> AddPatient([FromBody] AddPatientDto patientDto)
         {
@@ -38,9 +40,33 @@ namespace EcommerceApi.Controllers
             var result = await _frontDeskService.AddPatinetVitals(patientVitalsDto);
             if (result)
             {
-                return Ok("Patient vitals added successfully.");
+                return Ok(new { message = "Patient vitals added successfully." });
             }
             return BadRequest("Failed to add patient vitals.");
+        }
+
+       [HttpGet("PatientVitals/{id}")]
+       public async Task<IActionResult> GetVitalsById(int id)
+        {
+            var result = await _frontDeskService.GetPatientVitalsById(id);
+            return Ok(result);
+        }
+
+
+        [HttpPost("AddConsult")]
+        public async Task<IActionResult> AddPatientConsultationAsync([FromBody] ConsultationDto consultationDto)
+        {
+            // Get logged-in FrontDesk user ID from claims
+            var userClaim = User.Claims.FirstOrDefault(c => c.Type == "UserId");
+            if (userClaim == null)
+            {
+                return Unauthorized("UserId claim not found.");
+            }
+
+            consultationDto.FrontDeskId = int.Parse(userClaim.Value);
+
+            var entity = await _frontDeskService.AddConsultationAsync(consultationDto);
+            return Ok(entity);
         }
     }
 }

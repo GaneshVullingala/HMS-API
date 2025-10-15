@@ -41,5 +41,11 @@ namespace EcommerceApi.Controllers
             }
             return NotFound("Failed to add prescription.");
         }
+
+        //[HttpGet("AllConsultations")]
+        //public async Task<IActionResult> GetAllConsultationsAsync()
+        //{
+
+        //}
     }
 }

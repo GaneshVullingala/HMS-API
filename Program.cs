@@ -1,12 +1,18 @@
 ﻿using EcommerceApi.Data;
 using EcommerceApi.Interfaces;
+using EcommerceApi.Mappings;
+using EcommerceApi.Models;
 using EcommerceApi.Repositories;
 using EcommerceApi.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using System.Text;
-using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using EcommerceApi.Mappings;
+using Microsoft.Extensions.FileProviders;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+
+
+var passwordHasher = new PasswordHasher<LoginInfo>();
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -36,6 +42,8 @@ builder.Services.AddScoped<IFrontDeskRepository, FrontDeskRepository>();
 builder.Services.AddScoped<ILoginRepository, LoginRepository>();
 builder.Services.AddScoped<ILoginService, LoginService>();
 builder.Services.AddScoped<IGeneralRepostiory, GeneralRepostiory>();
+builder.Services.AddScoped<IPatientService, PatientService>();
+builder.Services.AddScoped<IPatientRepository, PatientRepository>();
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 
@@ -55,6 +63,23 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     });
 builder.Services.AddAuthorization();
 var app = builder.Build();
+
+
+app.UseHttpsRedirection();
+app.UseStaticFiles(); // <--- Enables wwwroot by default
+// ✅ Add this section to serve /Uploads folder
+var uploadsPath = Path.Combine(Directory.GetCurrentDirectory(), "Uploads");
+if (!Directory.Exists(uploadsPath))
+{
+    Directory.CreateDirectory(uploadsPath);
+}
+
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(uploadsPath),
+    RequestPath = "/Uploads"
+});
+
 app.UseSwagger();
 app.UseSwaggerUI(c =>
 {
@@ -69,5 +94,41 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+//using (var scope = app.Services.CreateScope())
+//{
+//    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+
+//    // Ensure DB is created
+//    db.Database.EnsureCreated();
+
+//    // Check if admin already exists
+//    if (!db.tblLoginInfo.Any(u => u.Role == "Admin"))
+//    {
+//        var GaneralinfoEntity = new GeneralInfo()
+//        {
+//            Roleid = 1,
+//            FullName = "Admin",
+//            Status = "Active",
+//            CreatedOn = DateTime.Now
+//        };
+//        db.tblGeneralInfo.Add(GaneralinfoEntity);
+//        db.SaveChanges();
+
+//        var LoginInfoEntity = new LoginInfo()
+//        {
+//            Genid = GaneralinfoEntity.Genid,
+//            Role = "Admin",
+//            Phone = "9999999999",
+//            Email = "admin@gmail.com",
+//            Username = "Admin",
+//            Password = passwordHasher.HashPassword(null, "Admin@123")
+//        };
+       
+//        db.tblLoginInfo.Add(LoginInfoEntity);
+//        db.SaveChanges();
+//    }
+//}
+
 
 app.Run();

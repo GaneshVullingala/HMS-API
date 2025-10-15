@@ -1,6 +1,7 @@
 ﻿using EcommerceApi.Data;
 using EcommerceApi.Interfaces;
 using EcommerceApi.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace EcommerceApi.Repositories
 {
@@ -27,6 +28,7 @@ namespace EcommerceApi.Repositories
             await _context.tblFrontDeskInfo.AddAsync(frontDeskinfo);
             await _context.SaveChangesAsync();
 
+            loginInfo.UserId = frontDeskinfo.FrontDeskId;
             await _context.tblLoginInfo.AddAsync(loginInfo);
             await _context.SaveChangesAsync();
 
@@ -92,6 +94,25 @@ namespace EcommerceApi.Repositories
             await _context.tblPatientVitalsInfo.AddAsync(patientVitalsInfo);
             await _context.SaveChangesAsync();
             return patientVitalsInfo.PatientId;
+        }
+
+        public async Task<IEnumerable<FrontDeskInfo>> GetAllFrontDeskAsync()
+        {
+            var Entity = await _context.tblFrontDeskInfo.ToListAsync();
+            return Entity;
+        }
+
+        public async Task<PatientVitalsInfo> GetPatientVitalsById(int id)
+        {
+            var entity = await _context.tblPatientVitalsInfo.Where(p => p.PatientId == id).FirstOrDefaultAsync();
+            return entity;
+        }
+
+        public async Task<ConsultationInfo> AddConsultation(ConsultationInfo consultationInfo)
+        {
+            _context.tblConsultationInfo.Add(consultationInfo);
+            await _context.SaveChangesAsync();
+            return consultationInfo;
         }
     }
 }

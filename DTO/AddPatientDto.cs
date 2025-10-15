@@ -9,10 +9,7 @@
         public string Email { get; set; }
         public string PresentProblem { get; set; }
         public string PreviousHistory { get; set; }
-
-        
         public string Address { get; set; }
         public string Pincode { get; set; }
-        public decimal Fee { get; set; }
     }
 }

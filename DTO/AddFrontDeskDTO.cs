@@ -8,6 +8,12 @@
         public string Email { get; set; }
         public string Speciality { get; set; }
         public int Experience { get; set; }
+
+        // for files
+        public IFormFile PhotoImg { get; set; }
+        public IFormFile DocImg { get; set; }
+
+
         public string PhotoImgUrl { get; set; }
         public string DocImgUrl { get; set; }
         public string Address { get; set; }

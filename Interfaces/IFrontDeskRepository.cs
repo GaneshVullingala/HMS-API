@@ -9,5 +9,11 @@ namespace EcommerceApi.Interfaces
         Task<PatientInfo> AddPatient(PatientInfo patientInfo, GeneralInfo generalInfo, LoginInfo loginInfo, CommunicationInfo communicationInfo, ConsultationInfo consultationInfo);
     
         Task<int> AddPatientVitals(PatientVitalsInfo patientVitalsInfo);
+
+        Task<IEnumerable<FrontDeskInfo>> GetAllFrontDeskAsync();
+
+        Task<PatientVitalsInfo> GetPatientVitalsById(int Id);
+
+        Task<ConsultationInfo> AddConsultation(ConsultationInfo consultation);  
     }
 }

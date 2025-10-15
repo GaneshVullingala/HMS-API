@@ -11,26 +11,32 @@ using System.Threading.Tasks;
 
 namespace EcommerceApi.Controllers
 {
-    [Authorize(Roles = "Admin")]
+
+    [Authorize(Roles = "Admin, FrontDesk")]
     [Route("api/[controller]")]
     [ApiController]
     public class AdminController : ControllerBase
     {
         private readonly IDoctorService _doctorservice;
         private readonly IFrontDeskService _frontdeskservice;
+        private readonly IPatientService _patientservice;
 
-        public AdminController(IDoctorService doctorservice , IFrontDeskService frontDeskService)
+
+        public AdminController(IDoctorService doctorservice , IFrontDeskService frontDeskService, IPatientService patientService)
         {
             _doctorservice = doctorservice;
             _frontdeskservice = frontDeskService;
+            _patientservice = patientService;
         }
 
+
         [HttpPost("doctor")]
-        public async Task<IActionResult> AddDoctor([FromBody] AddDoctorDto addDoctorDto)
+        public async Task<IActionResult> AddDoctor([FromForm] AddDoctorDto addDoctorDto)
         {
             var DoctorEntity = await _doctorservice.AddDoctorAsync(addDoctorDto);
             return Ok(DoctorEntity);
         }
+
 
         [HttpGet("doctor")]
         public async Task<IActionResult> GetAllDoctors()
@@ -39,6 +45,7 @@ namespace EcommerceApi.Controllers
             return Ok(AllDoctorsList);
         }
 
+
         [HttpGet("doctor/id/{id}")]
         public async Task<IActionResult> GetDoctorById(int id)
         {
@@ -46,6 +53,8 @@ namespace EcommerceApi.Controllers
             if (DoctorEntity == null) return NotFound();
             return Ok(DoctorEntity);
         }
+
+
         [HttpGet("doctor/name/{name}")]
         public async Task<IActionResult> GetDoctorByName(string name)
         {
@@ -53,8 +62,10 @@ namespace EcommerceApi.Controllers
             if (DoctorsList == null) return NotFound();
             return Ok(DoctorsList);
         }
-        [HttpPut("id/{id}")]
-        public async Task<IActionResult> UpdateDoctorInfo(int id, [FromBody] AddDoctorDto updateDoctorDto)
+
+
+        [HttpPut("doctor/id/{id}")]
+        public async Task<IActionResult> UpdateDoctorInfo(int id, [FromForm] AddDoctorDto updateDoctorDto)
         {
             if (!ModelState.IsValid)
             {
@@ -76,7 +87,7 @@ namespace EcommerceApi.Controllers
             }
         }
 
-        [HttpDelete("doctor/{id}")]
+        [HttpDelete("doctor/id/{id}")]
         public async Task<IActionResult> DeleteDoctor(int id)
         {
             if(id== 0)
@@ -86,7 +97,7 @@ namespace EcommerceApi.Controllers
             bool istrue = await _doctorservice.DeleteDoctorAsync(id);
             if (istrue)
             {
-                return Ok("Doctor is deleted with id is "+ id);
+                return Ok(new { message = "Doctor deleted successfully" });
             }
             else
             {
@@ -94,7 +105,7 @@ namespace EcommerceApi.Controllers
             }
         }
         [HttpPost("frontdesk")]
-        public async Task<IActionResult> AddFrontDeskAsync([FromBody] AddFrontDeskDTO addFrontDeskDTO)
+        public async Task<IActionResult> AddFrontDeskAsync([FromForm] AddFrontDeskDTO addFrontDeskDTO)
         {
             if (!ModelState.IsValid) 
             { 
@@ -102,6 +113,61 @@ namespace EcommerceApi.Controllers
             }
             var frontdeskentity = await _frontdeskservice.AddFrontDeskAsync(addFrontDeskDTO);
             return Ok(frontdeskentity);
+        }
+
+
+        [HttpGet("frontdesk")]
+        public async Task<IActionResult> GetAllFrontDeskAsync()
+        {
+            var AllFrontDeskList = await _frontdeskservice.GetAllFrontDeskInfoAsync();
+
+            if(AllFrontDeskList== null)
+            {
+                return NotFound();
+            }
+            return Ok(AllFrontDeskList);
+
+        }
+
+
+
+        [HttpGet("patient")]
+        public async Task<IActionResult> GetAllPatientsAsync()
+        {
+            var AllPatinetList = await _patientservice.GetAllPatientsAsync();
+            if (AllPatinetList == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                return Ok(AllPatinetList);
+            }
+        }
+
+
+        [HttpPost("patient")]
+        public async Task<IActionResult> AddPatientAsync([FromForm] AddPatientDto addPatientDto)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var patiententity = await _patientservice.AddPatientAsync(addPatientDto);
+            return Ok(patiententity);
+        }
+
+
+        [HttpGet("frontdesk/id/{id}")]
+        public async Task<IActionResult> GetFrontDeskById(int id)
+        {
+            var frontdeskentity = await _frontdeskservice.GetAllFrontDeskInfoAsync();
+            var frontdesk = frontdeskentity.FirstOrDefault(fd => fd.FrontDeskId == id);
+            if (frontdesk == null)
+            {
+                return NotFound();
+            }
+            return Ok(frontdesk);
         }
 
     }
