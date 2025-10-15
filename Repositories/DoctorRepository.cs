@@ -5,6 +5,7 @@ using EcommerceApi.Models;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Collections;
 using System.Numerics;
 
 namespace EcommerceApi.Repositories
@@ -172,6 +173,11 @@ namespace EcommerceApi.Repositories
             await _context.tblprescriptionInfo.AddAsync(prescription);
             await _context.SaveChangesAsync();
             return true;
+        }
+
+        public async Task<IEnumerable<ConsultationInfo>> GetConsultationsByDoctorId(int Id)
+        {
+            return await _context.tblConsultationInfo.Where(c => c.DoctorId == Id).ToListAsync();
         }
     }
 }

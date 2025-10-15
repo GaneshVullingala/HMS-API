@@ -42,10 +42,29 @@ namespace EcommerceApi.Controllers
             return NotFound("Failed to add prescription.");
         }
 
-        //[HttpGet("AllConsultations")]
-        //public async Task<IActionResult> GetAllConsultationsAsync()
-        //{
 
-        //}
+        [HttpGet("consultations")]
+        public async Task<IActionResult> GetConsultationsByDoctor()
+        {
+            var userClaim = User.Claims.FirstOrDefault(c => c.Type == "UserId");
+            if (userClaim == null)
+            {
+                return Unauthorized();
+            }
+            else
+            {
+                var ResultEntity = await _doctorService.GetConsultationsByDoctorId(int.Parse(userClaim.Value));
+
+                if (ResultEntity != null)
+                {
+                    return Ok(ResultEntity);
+                }
+                else
+                {
+                    return NotFound();
+                }
+            }
+               
+        }
     }
 }

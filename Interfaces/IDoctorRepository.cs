@@ -22,5 +22,7 @@ namespace EcommerceApi.Interfaces
 
         //Task<IEnumerable<ConsultationInfo>> GetAllConsultationsAsync();
 
+        Task<IEnumerable<ConsultationInfo>> GetConsultationsByDoctorId(int Id);
+
     }
 }

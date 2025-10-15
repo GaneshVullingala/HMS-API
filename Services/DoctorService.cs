@@ -1,12 +1,14 @@
-﻿using EcommerceApi.DTO;
+﻿using AutoMapper;
+using EcommerceApi.DTO;
 using EcommerceApi.Interfaces;
 using EcommerceApi.Models;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using System.Numerics;
-using Microsoft.AspNetCore.Identity;
-using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
 
 namespace EcommerceApi.Services
 {
@@ -141,10 +143,10 @@ namespace EcommerceApi.Services
             return true;
         }
 
-        //public async Task<IEnumerable<ConsultationInfo>> GetAllConsultationsAsync()
-        //{
-        //     return await _repo.GetAllConsultationsAsync();
-        
-        //}
+        public async Task<IEnumerable<ConsultationInfo>> GetConsultationsByDoctorId(int Id)
+        {
+            return await _repo.GetConsultationsByDoctorId(Id);
+        }
+      
     }
 }
