@@ -1,9 +1,11 @@
-﻿using EcommerceApi.Models;
+﻿using EcommerceApi.DTO;
+using EcommerceApi.Models;
 
 namespace EcommerceApi.Interfaces
 {
     public interface IGeneralRepostiory
     {
-        Task<PatientInfo?> GetPatientByIdAsync(int patientId);
+
+        Task<ConsultationViewDto?> GetConsultationInfoByIdAsync(int ConsultId);
     }
 }

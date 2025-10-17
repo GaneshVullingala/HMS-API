@@ -15,6 +15,8 @@ namespace EcommerceApi.Interfaces
 
         Task<PatientVitalsInfo> GetPatientVitalsById(int Id);
 
-        Task<ConsultationDto> AddConsultationAsync(ConsultationDto consultationDTO); 
+        Task<ConsultationDto> AddConsultationAsync(ConsultationDto consultationDTO);
+
+        Task<PatientInfo> GetPatientByIdAsync(int patientId);
     }
 }

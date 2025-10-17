@@ -1,4 +1,5 @@
-﻿using EcommerceApi.Models;
+﻿using EcommerceApi.DTO;
+using EcommerceApi.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace EcommerceApi.Data
@@ -17,6 +18,8 @@ namespace EcommerceApi.Data
         public DbSet<ConsultationInfo> tblConsultationInfo { get; set; }
         public DbSet<CommunicationInfo> tblCommunicationInfo { get; set; }
         public DbSet<LoginInfo> tblLoginInfo { get; set; }
+
+        public DbSet<ConsultationViewDto> Consultation_V { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

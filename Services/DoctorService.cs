@@ -147,6 +147,15 @@ namespace EcommerceApi.Services
         {
             return await _repo.GetConsultationsByDoctorId(Id);
         }
-      
+
+        public async Task<IEnumerable<ConsultationInfo>> GetPendingConsultationsByDoctorId(int Id)
+        {
+            return await _repo.GetPendingConsultationsByDoctorId(Id);
+        }
+
+        public async Task<IEnumerable<ConsultationInfo>> GetCompletedConsultationsByDoctorId(int Id)
+        {
+            return await _repo.GetCompletedConsultationsByDoctorId(Id);
+        }
     }
 }

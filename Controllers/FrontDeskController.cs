@@ -68,5 +68,12 @@ namespace EcommerceApi.Controllers
             var entity = await _frontDeskService.AddConsultationAsync(consultationDto);
             return Ok(entity);
         }
+
+        [HttpGet("Patient/{patientId}")]
+        public async Task<IActionResult> GetPatientById(int patientId)
+        {
+            var result = await _frontDeskService.GetPatientByIdAsync(patientId);
+            return Ok(result);
+        }
     }
 }

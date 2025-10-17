@@ -1,7 +1,9 @@
 ﻿using EcommerceApi.Data;
+using EcommerceApi.DTO;
 using EcommerceApi.Interfaces;
 
 using EcommerceApi.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace EcommerceApi.Repositories
 {
@@ -12,9 +14,9 @@ namespace EcommerceApi.Repositories
         {
             _context = context;
         }
-        public async Task<PatientInfo?> GetPatientByIdAsync(int patientId)
+        public async Task<ConsultationViewDto?> GetConsultationInfoByIdAsync(int consultId)
         {
-            return await _context.tblPatientInfo.FindAsync(patientId);
+            return await _context.Consultation_V.Where(c => c.ConsultId == consultId).FirstOrDefaultAsync();
         }
     }
 }

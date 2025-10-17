@@ -134,7 +134,7 @@ namespace EcommerceApi.Services
             {
                 throw new ArgumentNullException(nameof(patientVitalsdto), "Patient vitals data cannot be null");
             }
-            var ispatient = await _generalRepository.GetPatientByIdAsync(patientVitalsdto.PatientId);
+            var ispatient = await _frontDeskRepository.GetPatientByIdAsync(patientVitalsdto.PatientId);
             if (ispatient == null)
             {
                 throw new ArgumentException($"Patient with ID {patientVitalsdto.PatientId} does not exist.");
@@ -152,6 +152,11 @@ namespace EcommerceApi.Services
         public async Task<PatientVitalsInfo> GetPatientVitalsById(int Id)
         {
             return await _frontDeskRepository.GetPatientVitalsById(Id);
+        }
+
+        public async Task<PatientInfo> GetPatientByIdAsync(int patientId)
+        {
+            return await _frontDeskRepository.GetPatientByIdAsync(patientId);
         }
 
         public async Task<ConsultationDto> AddConsultationAsync(ConsultationDto consultationDto)

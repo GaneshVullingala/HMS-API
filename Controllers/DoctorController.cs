@@ -16,7 +16,7 @@ namespace EcommerceApi.Controllers
         {
             _doctorService = doctorService;
         }
-        [HttpPut("UpdateConsult")]
+        [HttpPut("UpdateConsultation")]
         public async Task<IActionResult> UpdateConultInfo([FromBody] ConsultationDto consultationdto)
         {
             var result = await _doctorService.UpdateConsultationInfoAsync(consultationdto);
@@ -66,5 +66,49 @@ namespace EcommerceApi.Controllers
             }
                
         }
+
+        [HttpGet("consultations/pending")]
+        public async Task<IActionResult> GetPendingConsultationsByDoctor()
+        {
+            var userClaim = User.Claims.FirstOrDefault(c => c.Type == "UserId");
+            if (userClaim == null)
+            {
+                return Unauthorized();
+            }
+            else
+            {
+                var ResultEntity = await _doctorService.GetPendingConsultationsByDoctorId(int.Parse(userClaim.Value));
+                if (ResultEntity != null)
+                {
+                    return Ok(ResultEntity);
+                }
+                else
+                {
+                    return NotFound();
+                }
+            }
+        }
+        [HttpGet("consultations/completed")]
+        public async Task<IActionResult> GetCompletedConsultationsByDoctor()
+        {
+            var userClaim = User.Claims.FirstOrDefault(c => c.Type == "UserId");
+            if (userClaim == null)
+            {
+                return Unauthorized();
+            }
+            else
+            {
+                var ResultEntity = await _doctorService.GetCompletedConsultationsByDoctorId(int.Parse(userClaim.Value));
+                if (ResultEntity != null)
+                {
+                    return Ok(ResultEntity);
+                }
+                else
+                {
+                    return NotFound();
+                }
+            }
+        }
+
     }
 }

@@ -42,6 +42,7 @@ builder.Services.AddScoped<IFrontDeskRepository, FrontDeskRepository>();
 builder.Services.AddScoped<ILoginRepository, LoginRepository>();
 builder.Services.AddScoped<ILoginService, LoginService>();
 builder.Services.AddScoped<IGeneralRepostiory, GeneralRepostiory>();
+builder.Services.AddScoped<IGeneralService, GeneralService>();
 builder.Services.AddScoped<IPatientService, PatientService>();
 builder.Services.AddScoped<IPatientRepository, PatientRepository>();
 builder.Services.AddAutoMapper(typeof(MappingProfile));

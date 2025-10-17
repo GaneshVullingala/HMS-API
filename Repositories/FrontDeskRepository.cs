@@ -110,9 +110,16 @@ namespace EcommerceApi.Repositories
 
         public async Task<ConsultationInfo> AddConsultation(ConsultationInfo consultationInfo)
         {
+            consultationInfo.CreatedOn = DateTime.Now;  
             _context.tblConsultationInfo.Add(consultationInfo);
             await _context.SaveChangesAsync();
             return consultationInfo;
+        }
+
+        public async Task<PatientInfo> GetPatientByIdAsync(int patientId)
+        {
+            var entity = await _context.tblPatientInfo.FindAsync(patientId);
+            return entity;
         }
     }
 }

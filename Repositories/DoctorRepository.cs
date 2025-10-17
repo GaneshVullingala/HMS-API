@@ -179,5 +179,15 @@ namespace EcommerceApi.Repositories
         {
             return await _context.tblConsultationInfo.Where(c => c.DoctorId == Id).ToListAsync();
         }
+
+        public async Task<IEnumerable<ConsultationInfo>> GetPendingConsultationsByDoctorId(int Id)
+        {
+            return await _context.tblConsultationInfo.Where(c => c.DoctorId == Id && c.CurrentStatus == "Registered").ToListAsync();
+        }
+
+        public async Task<IEnumerable<ConsultationInfo>> GetCompletedConsultationsByDoctorId(int Id)
+        {
+            return await _context.tblConsultationInfo.Where(c => c.DoctorId == Id && c.CurrentStatus == "Completed").ToListAsync();
+        }   
     }
 }
