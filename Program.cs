@@ -45,7 +45,11 @@ builder.Services.AddScoped<IGeneralRepostiory, GeneralRepostiory>();
 builder.Services.AddScoped<IGeneralService, GeneralService>();
 builder.Services.AddScoped<IPatientService, PatientService>();
 builder.Services.AddScoped<IPatientRepository, PatientRepository>();
+builder.Services.AddScoped<IAdminRepository, AdminRepository>();
+builder.Services.AddScoped<IAdminService, AdminService>();
+
 builder.Services.AddAutoMapper(typeof(MappingProfile));
+
 
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

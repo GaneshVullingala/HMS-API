@@ -8,5 +8,7 @@
         public decimal Height { get; set; }
         public decimal Weight { get; set; }
         public decimal SPO2 { get; set; }
+
+        public string BloodGroup { get; set; } = string.Empty;
     }
 }

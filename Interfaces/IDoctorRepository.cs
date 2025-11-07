@@ -14,7 +14,7 @@ namespace EcommerceApi.Interfaces
 
         Task<DoctorInfo> UpdateDoctorAsync(int id, AddDoctorDto doctorDto);
 
-        Task<ConsultationInfo> UpdateConsultationInfoAsync(ConsultationInfo consultationInfo);
+        Task<ConsultationInfo> UpdateConsultationInfoAsync(UpdateConsultationDto updateconsultationdto);
 
         Task<ConsultationInfo?> GetConsultationByIdAsync(int id);
 

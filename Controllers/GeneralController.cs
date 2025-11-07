@@ -11,10 +11,10 @@ namespace EcommerceApi.Controllers
     [ApiController]
     public class GeneralController : ControllerBase
     {
-        private readonly IGeneralRepostiory _generalRepostiory;
-        public GeneralController(GeneralRepostiory generalRepostiory)
+        private readonly IGeneralService _generalService;
+        public GeneralController(IGeneralService generalService)
         {
-            _generalRepostiory = generalRepostiory;
+            _generalService = generalService;
         }
 
         [HttpGet("consultation/{ConsultId}")]
@@ -22,7 +22,7 @@ namespace EcommerceApi.Controllers
         {
             try
             {
-                var consultation = await _generalRepostiory.GetConsultationInfoByIdAsync(ConsultId);
+                var consultation = await _generalService.GetConsultationInfoByIdAsync(ConsultId);
                 if (consultation == null)
                 {
                     return NotFound(new { Message = "Consultation not found" });

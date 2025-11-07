@@ -6,7 +6,7 @@ using EcommerceApi.Interfaces;
 
 namespace EcommerceApi.Controllers
 {
-    [Authorize(Roles="Doctor")]
+    [Authorize(Roles="Doctor, Admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class DoctorController : ControllerBase
@@ -17,7 +17,7 @@ namespace EcommerceApi.Controllers
             _doctorService = doctorService;
         }
         [HttpPut("UpdateConsultation")]
-        public async Task<IActionResult> UpdateConultInfo([FromBody] ConsultationDto consultationdto)
+        public async Task<IActionResult> UpdateConultInfo([FromBody] UpdateConsultationDto consultationdto)
         {
             var result = await _doctorService.UpdateConsultationInfoAsync(consultationdto);
             if (result != null)

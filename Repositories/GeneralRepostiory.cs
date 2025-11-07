@@ -14,7 +14,7 @@ namespace EcommerceApi.Repositories
         {
             _context = context;
         }
-        public async Task<ConsultationViewDto?> GetConsultationInfoByIdAsync(int consultId)
+        public async Task<ConsultationView?> GetConsultationInfoByIdAsync(int consultId)
         {
             return await _context.Consultation_V.Where(c => c.ConsultId == consultId).FirstOrDefaultAsync();
         }

@@ -6,6 +6,6 @@ namespace EcommerceApi.Interfaces
     public interface IGeneralService
     {
 
-        Task<ConsultationViewDto> GetConsultationInfoByIdAsync(int ConsultId);
+        Task<ConsultationView> GetConsultationInfoByIdAsync(int ConsultId);
     }
 }

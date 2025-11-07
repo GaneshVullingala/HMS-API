@@ -19,11 +19,13 @@ namespace EcommerceApi.Data
         public DbSet<CommunicationInfo> tblCommunicationInfo { get; set; }
         public DbSet<LoginInfo> tblLoginInfo { get; set; }
 
-        public DbSet<ConsultationViewDto> Consultation_V { get; set; }
+        public DbSet<ConsultationView> Consultation_V { get; set; }
+        public DbSet<MedicineInfo> tblMedicineInfo  { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<ConsultationInfo>()
                 .HasOne(c => c.patientInfo)
                 .WithMany()
@@ -41,6 +43,13 @@ namespace EcommerceApi.Data
                 .WithMany()
                 .HasForeignKey(c => c.FrontDeskId)
                 .OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<ConsultationView>(entity =>
+            {
+                entity.HasNoKey(); // <-- EF must not expect a primary key
+                entity.ToView("Consultation_V"); // <-- exact name of your view in DB
+            });
+
+
         }
 
 

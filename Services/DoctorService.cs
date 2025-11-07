@@ -115,20 +115,12 @@ namespace EcommerceApi.Services
             return await _repo.UpdateDoctorAsync(id, doctordto);
         }
 
-        public async Task<ConsultationInfo> UpdateConsultationInfoAsync(ConsultationDto consultationdto)
+        public async Task<ConsultationInfo> UpdateConsultationInfoAsync(UpdateConsultationDto upconsultationdto)
         {
-            if (consultationdto == null)
-            {
-                throw new ArgumentNullException(nameof(consultationdto), "Consultation information cannot be null.");
-            }
-            var consultation = await _repo.GetConsultationByIdAsync(consultationdto.ConsultId);
-            if (consultation == null)
-            {
-                throw new KeyNotFoundException($"Consultation with ID {consultationdto.ConsultId} not found.");
-            }
-            var consultEntity = _mapper.Map(consultationdto, consultation);
-            await _repo.UpdateConsultationInfoAsync(consultEntity);
-            return consultEntity;
+
+            var updatedConsultation =  await _repo.UpdateConsultationInfoAsync(upconsultationdto);
+            return updatedConsultation;
+          
         }
 
         public async Task<bool?> AddPrescriptionAsync(PrescriptionDto prescriptiondto)

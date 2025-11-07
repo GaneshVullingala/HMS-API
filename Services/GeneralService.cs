@@ -1,5 +1,6 @@
 ﻿using EcommerceApi.DTO;
 using EcommerceApi.Interfaces;
+using EcommerceApi.Models;
 
 namespace EcommerceApi.Services
 {
@@ -11,7 +12,7 @@ namespace EcommerceApi.Services
             _generalRepostiory = generalRepostiory;
         }   
 
-        public async Task<ConsultationViewDto> GetConsultationInfoByIdAsync(int ConsultId)
+        public async Task<ConsultationView> GetConsultationInfoByIdAsync(int ConsultId)
         {
             var consultation = await _generalRepostiory.GetConsultationInfoByIdAsync(ConsultId);
             if (consultation == null)

@@ -21,5 +21,10 @@ namespace EcommerceApi.Models
         public string Pincode { get; set; }
         //public decimal Fee { get; set; }
         public DateTime CreatedOn { get; set; }
+
+        public string ReferredBy { get; set; }
+
+        public string Gender { get; set; }
+        public string Age { get; set; }
     }
 }

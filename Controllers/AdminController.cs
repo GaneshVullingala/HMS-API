@@ -20,13 +20,15 @@ namespace EcommerceApi.Controllers
         private readonly IDoctorService _doctorservice;
         private readonly IFrontDeskService _frontdeskservice;
         private readonly IPatientService _patientservice;
+        private readonly IAdminService _adminService;
 
 
-        public AdminController(IDoctorService doctorservice , IFrontDeskService frontDeskService, IPatientService patientService)
+        public AdminController(IDoctorService doctorservice , IFrontDeskService frontDeskService, IPatientService patientService, IAdminService adminservice)
         {
             _doctorservice = doctorservice;
             _frontdeskservice = frontDeskService;
             _patientservice = patientService;
+            _adminService = adminservice;
         }
 
 
@@ -170,5 +172,18 @@ namespace EcommerceApi.Controllers
             return Ok(frontdesk);
         }
 
+        [HttpGet("admincount")]
+        public async Task<IActionResult> GetAllCountsAsync()
+        {
+            var adminCountDto = await _adminService.GetAllCountAsync();
+            return Ok(adminCountDto);
+        }
+
+        [HttpGet("consultations/status/{status}")]
+        public async Task<IActionResult> GetAllConsultationsByStatusAsync(string status)
+        {
+            var consultations = await _adminService.GetAllConsultationsByStatusAsync(status);
+            return Ok(consultations);
+        }   
     }
 }

@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace EcommerceApi.DTO
+namespace EcommerceApi.Models
 {
-    public class ConsultationViewDto
+    public class ConsultationView
     {
         [Key]
         public int ConsultId { get; set; }
@@ -29,10 +29,10 @@ namespace EcommerceApi.DTO
         public DateTime? RevisitDate { get; set; }
         public decimal Fee { get; set; }
 
-        public DateTime ConsultationCreatedOn { get; set; } 
+        public DateTime ConsultationCreatedOn { get; set; }
         public string PresentProblem { get; set; }
         public string PreviousHistory { get; set; }
-       
+
         // Vitals
         public string BP { get; set; }
         public string Sugar { get; set; }
@@ -42,6 +42,6 @@ namespace EcommerceApi.DTO
         public string Temperature { get; set; }
         public string BloodGroup { get; set; }
 
-        public DateTime VitalsCreatedOn { get; set; }   
+        public DateTime VitalsCreatedOn { get; set; }
     }
 }

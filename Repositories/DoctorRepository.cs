@@ -2,6 +2,7 @@
 using EcommerceApi.DTO;
 using EcommerceApi.Interfaces;
 using EcommerceApi.Models;
+using Microsoft.AspNetCore.CookiePolicy;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -162,9 +163,44 @@ namespace EcommerceApi.Repositories
         {
             return await _context.tblConsultationInfo.FindAsync(id);
         }
-        public async Task<ConsultationInfo> UpdateConsultationInfoAsync(ConsultationInfo consultationInfo)
+        public async Task<ConsultationInfo> UpdateConsultationInfoAsync(UpdateConsultationDto updateconsult)
         {
-            await _context.SaveChangesAsync();
+            var consultationInfo = await _context.tblConsultationInfo.FindAsync(updateconsult.consultationDto.ConsultId);
+            if (consultationInfo == null)
+            {
+                throw new Exception("Consultation not found");
+            }
+            if(consultationInfo != null)
+            {
+                consultationInfo.CurrentStatus = "Consultation Completed";
+                consultationInfo.Diognosis = updateconsult.consultationDto.Diognosis;
+                consultationInfo.RevisitDate = updateconsult.consultationDto.RevisitDate;
+                consultationInfo.Advice = updateconsult.consultationDto.Advice;
+                consultationInfo.Problem = updateconsult.consultationDto.Problem;
+
+                // EF tracks entity automatically
+                await _context.SaveChangesAsync();
+
+            }
+                
+            foreach(var med in updateconsult.prescription)
+            {
+                var medicineInfo = new MedicineInfo
+                {
+                    ConsultId = consultationInfo.ConsultId,
+                    PatientId = consultationInfo.PatientId,
+                    DoctorId = consultationInfo.DoctorId,
+                    MedicineName = med.MedicineName,
+                    isMrngMedicine = med.isMrngMedicine,
+                    isANoonMedicine = med.isANoonMedicine,
+                    isNightMedicine = med.isNightMedicine,
+                    MedicineQuantity = med.MedicineQuantity,
+                    createdOn = DateTime.Now
+                };
+
+                await _context.tblMedicineInfo.AddAsync(medicineInfo);
+                await _context.SaveChangesAsync();
+            }
             return consultationInfo;
         }
 
@@ -187,7 +223,7 @@ namespace EcommerceApi.Repositories
 
         public async Task<IEnumerable<ConsultationInfo>> GetCompletedConsultationsByDoctorId(int Id)
         {
-            return await _context.tblConsultationInfo.Where(c => c.DoctorId == Id && c.CurrentStatus == "Completed").ToListAsync();
+            return await _context.tblConsultationInfo.Where(c => c.DoctorId == Id && c.CurrentStatus == "Consultation Completed").ToListAsync();
         }   
     }
 }

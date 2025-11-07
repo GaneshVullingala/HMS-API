@@ -11,5 +11,10 @@
         public string PreviousHistory { get; set; }
         public string Address { get; set; }
         public string Pincode { get; set; }
+
+        public int Age { get; set; }
+        public string Gender { get; set; }
+
+        public string ReferredBy { get; set; }
     }
 }

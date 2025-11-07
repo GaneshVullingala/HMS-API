@@ -16,5 +16,9 @@ namespace EcommerceApi.Models
         public decimal Weight { get; set; }
         public decimal SPO2 { get; set; }
         public DateTime CreatedOn { get; set; }
+
+        public string Temperature { get; set; }
+
+        public string BloodGroup { get; set; }
     }
 }
